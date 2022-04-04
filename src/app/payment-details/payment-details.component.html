@@ -1,0 +1,67 @@
+.<div class="jumbotron" style="background-color: #f7f7f7; padding: 10px; border-radius:7px; margin-bottom: 20px;">
+    <h1 class="display-4 text-center">Payment Detail Register</h1>
+</div>
+
+<form [formGroup]="paymentForm">
+    <div class="mb-3">
+        <label for="cardOwnerName">Card Owner Name</label>
+        <input type="text" class="form-control form-control-sm mt-1" formControlName="cardOwnerName"
+            placeholder="Typing ur name..." [ngClass]="{ 'is-invalid': submitted && f.cardOwnerName.errors }">
+        <div *ngIf="submitted && f.cardOwnerName.errors" class="invalid-feedback">
+            <small *ngIf="f.cardOwnerName.errors.required">Please type your name</small>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="cardNumber">Card Number</label>
+        <input type="text" class="form-control form-control-sm mt-1" formControlName="cardNumber"
+            placeholder="16 digit card number" [ngClass]="{ 'is-invalid': submitted && f.cardNumber.errors }">
+        <div *ngIf="submitted && f.cardNumber.errors" class="invalid-feedback">
+            <small *ngIf="f.cardNumber.errors.required">Please type your phone number</small>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="securityCode">Security Code</label>
+            <input type="text" class="form-control form-control-sm mt-1" formControlName="securityCode"
+                placeholder="Security code" [ngClass]="{ 'is-invalid': submitted && f.securityCode.errors }">
+            <div *ngIf="submitted && f.securityCode.errors" class="invalid-feedback">
+                <small *ngIf="f.securityCode.errors.required">Please type security code</small>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="expirationDate">Exp. Date</label>
+            <input type="text" class="form-control form-control-sm mt-1" formControlName="expirationDate"
+                [ngClass]="{ 'is-invalid': submitted && f.expirationDate.errors }" placeholder="DD/MM/YYYY">
+            <div *ngIf="submitted && f.expirationDate.errors" class="invalid-feedback">
+                <small *ngIf="f.expirationDate.errors.required">Please type expiration date</small>
+            </div>
+        </div>
+    </div>
+    <button [disabled]="disableSave" type="submit" class="btn btn-info" (click)="onSubmit()">Save</button>
+    <button [disabled]="!disableUpdate" type="submit" class="btn btn-warning ms-2" (click)="onUpdate()">Update</button>
+</form>
+
+<table class="table table-hover table-bordered border-info mt-5">
+    <thead class="bg-info">
+        <tr>
+            <th scope="col" class="text-center">Card Owner</th>
+            <th scope="col" class="text-center">Card Number</th>
+            <th scope="col" class="text-center">Exp. Date</th>
+            <th scope="col" class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pd of dataList">
+            <td class="text-center">{{pd.cardOwnerName}}</td>
+            <td class="text-center">{{pd.cardNumber}}</td>
+            <td class="text-center">{{pd.expirationDate}}</td>
+            <td class="text-center">
+                <button class="btn btn-outline-info" (click)="getValueId(pd.payMentDetailId)"><i
+                        class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+
+                <button class="btn btn-outline-danger ms-2" (click)="onDelete(pd.payMentDetailId)"><i
+                        class="fa fa-trash-o" aria-hidden="true"></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
